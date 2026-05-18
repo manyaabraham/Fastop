@@ -615,6 +615,101 @@ onMounted(() => {
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05) !important;
   height: auto !important;
   min-height: 60px !important;
+  
+  /* Force zero space from bottom */
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  bottom: -1px !important;
+  left: -1px !important;
+  right: -1px !important;
+  width: calc(100% + 2px) !important;
+  
+  /* Additional force */
+  transform: translateY(0) !important;
+  top: auto !important;
+  max-height: 70px !important;
+}
+
+/* Remove any white space at the bottom of the page */
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure the last content doesn't create space */
+#app {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Add padding to the last container to prevent content hiding behind nav */
+.container {
+  padding-bottom: 70px !important;
+  margin-bottom: 0 !important;
+}
+
+/* Force remove safe area insets on iOS */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .bottom-nav {
+    padding-bottom: 0 !important;
+    padding-top: 8px !important;
+  }
+}
+
+@supports (padding: max(0px)) {
+  .bottom-nav {
+    padding-bottom: 0 !important;
+    padding-left: max(16px, env(safe-area-inset-left)) !important;
+    padding-right: max(16px, env(safe-area-inset-right)) !important;
+  }
+}
+
+/* For very tall screens or specific devices */
+@media screen and (min-height: 800px) {
+  .bottom-nav {
+    position: fixed !important;
+    bottom: 0 !important;
+  }
+}
+
+/* For Android devices with navigation bar */
+@media (max-width: 768px) {
+  .bottom-nav {
+    min-height: 55px !important;
+    padding: 6px 12px !important;
+  }
+  
+  .container {
+    padding-bottom: 65px !important;
+  }
+}
+
+/* For iOS devices */
+@supports (-webkit-touch-callout: none) {
+  .bottom-nav {
+    bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Force remove any extra spacing from parent elements */
+body, html, #app, .page-wrapper, .container, .shopping-lists-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Create space for the nav without extra bottom space */
+.page-wrapper::after {
+  content: '';
+  display: block;
+  height: 60px;
+  width: 100%;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .nav-item {
@@ -668,5 +763,55 @@ body, html {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+/* Dark Mode for Bottom Navigation Bar */
+.dark-mode .bottom-nav,
+#app.dark-mode .bottom-nav {
+  background: rgba(26, 26, 26, 0.98) !important;
+  border-top: 1px solid rgba(93, 255, 114, 0.25) !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .nav-icon,
+#app.dark-mode .nav-icon {
+  color: #888 !important;
+}
+
+.dark-mode .nav-label,
+#app.dark-mode .nav-label {
+  color: #888 !important;
+}
+
+.dark-mode .nav-item.active .nav-icon,
+#app.dark-mode .nav-item.active .nav-icon {
+  color: #5DFF72 !important;
+  filter: drop-shadow(0 0 4px rgba(93, 255, 114, 0.5));
+}
+
+.dark-mode .nav-item.active .nav-label,
+#app.dark-mode .nav-item.active .nav-label {
+  color: #5DFF72 !important;
+}
+
+.dark-mode .nav-item:hover .nav-icon,
+#app.dark-mode .nav-item:hover .nav-icon {
+  color: #5DFF72 !important;
+}
+
+.dark-mode .nav-item:hover .nav-label,
+#app.dark-mode .nav-item:hover .nav-label {
+  color: #5DFF72 !important;
+}
+
+.dark-mode .ripple,
+#app.dark-mode .ripple {
+  background: rgba(93, 255, 114, 0.3) !important;
+}
+
+.dark-mode .nav-item.active::before,
+#app.dark-mode .nav-item.active::before {
+  background: #5DFF72 !important;
+  box-shadow: 0 0 8px rgba(93, 255, 114, 0.8) !important;
 }
 </style>

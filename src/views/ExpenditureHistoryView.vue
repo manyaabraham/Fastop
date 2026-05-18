@@ -3,11 +3,6 @@
     <div class="container">
       <!-- Header -->
       <div class="header animate-slide-down">
-        <button class="back-button" @click="$router.back()">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2"/>
-          </svg>
-        </button>
         <div class="logo-area">
           <img v-if="logoUrl" :src="logoUrl" alt="Fastop Logo" class="header-logo animate-rotate" />
         </div>
