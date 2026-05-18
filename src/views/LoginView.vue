@@ -113,6 +113,30 @@
         </button>
       </div>
     </div>
+    <!-- Notification Toast -->
+<div v-if="showNotification" class="notification-toast animate-slide-down" :class="notificationType">
+  <div class="notification-content">
+    <div class="notification-icon">
+      <svg v-if="notificationType === 'success'" viewBox="0 0 24 24" fill="none">
+        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg v-else-if="notificationType === 'error'" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+        <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" stroke-width="2"/>
+        <circle cx="12" cy="16" r="1" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="notification-text">
+      <strong>{{ notificationTitle }}</strong>
+      <p>{{ notificationMessage }}</p>
+    </div>
+  </div>
+  <button class="notification-close" @click="showNotification = false">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2"/>
+    </svg>
+  </button>
+</div>
   </div>
 </template>
 
@@ -134,11 +158,33 @@ const handleLogin = async () => {
   loading.value = true
   const result = await authStore.signIn(email.value, password.value)
   if (result.success) {
-    router.push('/')
+    showNotificationMessage('Login successful! Redirecting...', 'Welcome Back!', 'success')
+    setTimeout(() => {
+      router.push('/')
+    }, 1500)
   } else {
-    alert(result.error)
+    showNotificationMessage(result.error, 'Login Failed', 'error')
   }
   loading.value = false
+}
+
+// Notification system
+const showNotification = ref(false)
+const notificationMessage = ref('')
+const notificationTitle = ref('')
+const notificationType = ref('success')
+let notificationTimeout = null
+
+const showNotificationMessage = (message, title, type) => {
+  notificationMessage.value = message
+  notificationTitle.value = title
+  notificationType.value = type
+  showNotification.value = true
+  
+  if (notificationTimeout) clearTimeout(notificationTimeout)
+  notificationTimeout = setTimeout(() => {
+    showNotification.value = false
+  }, 3000)
 }
 
 const goToSignup = () => {
@@ -211,6 +257,104 @@ const getParticleStyle = (i) => {
   border-radius: 50%;
   filter: blur(60px);
   animation: floatOrb 12s ease-in-out infinite;
+}
+
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border-radius: 16px;
+  padding: 14px 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  max-width: 90%;
+  width: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+  border-left: 4px solid;
+}
+
+.notification-toast.success {
+  border-left-color: #5DFF72;
+}
+
+.notification-toast.error {
+  border-left-color: #ff4444;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.notification-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notification-toast.success .notification-icon svg {
+  color: #5DFF72;
+}
+
+.notification-toast.error .notification-icon svg {
+  color: #ff4444;
+}
+
+.notification-text strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #1A1A1A;
+}
+
+.notification-text p {
+  font-size: 12px;
+  color: #6C757D;
+  margin: 0;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.notification-close svg {
+  width: 14px;
+  height: 14px;
+  color: #ADB5BD;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.dark-mode .notification-toast {
+  background: #2A2A2A;
+}
+
+.dark-mode .notification-text strong {
+  color: #FFFFFF;
+}
+
+.dark-mode .notification-text p {
+  color: #ADB5BD;
 }
 
 @keyframes floatOrb {
