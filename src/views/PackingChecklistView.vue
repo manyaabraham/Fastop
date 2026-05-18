@@ -524,7 +524,7 @@ const downloadPDF = async () => {
       <table class="items-table">
         <thead>
           <tr>
-            <th>#</th>
+            <th>No.</th>
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Unit Price (UGX)</th>
