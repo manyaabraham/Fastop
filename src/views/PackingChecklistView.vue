@@ -504,69 +504,6 @@ const downloadPDF = async () => {
       color: #1A1A1A;
     }
     
-    .info-section {
-      padding: 20px 30px;
-      background: #F8F9FA;
-      border-top: 1px solid #E0E0E0;
-      border-bottom: 1px solid #E0E0E0;
-    }
-    
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-    }
-    
-    .info-row:not(:last-child) {
-      border-bottom: 1px solid #E0E0E0;
-    }
-    
-    .info-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: #555;
-      min-width: 120px;
-    }
-    
-    .info-value {
-      font-size: 14px;
-      font-weight: 500;
-      color: #1A1A1A;
-    }
-    
-    .pack-stats {
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      background: #F8F9FA;
-      border-top: 1px solid #E0E0E0;
-    }
-    
-    .pack-stat {
-      text-align: center;
-      flex: 1;
-    }
-    
-    .pack-stat-label {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 5px;
-    }
-    
-    .pack-stat-value {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    
-    .pack-stat-value.packed {
-      color: #28a745;
-    }
-    
-    .pack-stat-value.unpacked {
-      color: #dc3545;
-    }
-    
     .report-footer {
       background: #1A1A1A;
       padding: 20px;
@@ -574,23 +511,13 @@ const downloadPDF = async () => {
       color: #999;
       font-size: 11px;
     }
-    
-    .status-yes {
-      color: #28a745;
-      font-weight: 600;
-    }
-    
-    .status-no {
-      color: #dc3545;
-      font-weight: 600;
-    }
   </style>
 </head>
 <body>
   <div class="report-container">
     <div class="report-header">
       <h1 class="report-title">FASTOP</h1>
-      <p class="report-subtitle">Packing Report - ${escapeHtml(selectedList.value.list_name)}</p>
+      <p class="report-subtitle">${escapeHtml(selectedList.value.list_name)}</p>
     </div>
     
     <div class="table-container">
@@ -599,10 +526,9 @@ const downloadPDF = async () => {
           <tr>
             <th>#</th>
             <th>Item Name</th>
-            <th>Qty</th>
+            <th>Quantity</th>
             <th>Unit Price (UGX)</th>
             <th>Total (UGX)</th>
-            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -613,53 +539,20 @@ const downloadPDF = async () => {
             <td style="padding: 12px;">${item.quantity}</td>
             <td style="padding: 12px;">${formatNumber(item.price)}</td>
             <td style="padding: 12px;">${formatNumber(item.price * item.quantity)}</td>
-            <td class="${item.packed ? 'status-yes' : 'status-no'}" style="padding: 12px;">
-              ${item.packed ? '✓ Packed' : '✗ Not Packed'}
-            </td>
           </tr>
           `).join('')}
         </tbody>
-       </table>
+      </table>
     </div>
     
     <div class="summary-section">
-      <span class="summary-label">GRAND TOTAL</span>
+      <span class="summary-label">TOTAL AMOUNT</span>
       <span class="summary-amount">UGX ${formatNumber(selectedList.value.total_amount)}</span>
-    </div>
-    
-    <div class="info-section">
-      <div class="info-row">
-        <span class="info-label">📅 Purchase Date:</span>
-        <span class="info-value">${formatDate(selectedList.value.purchased_at)}</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">📋 Total Items:</span>
-        <span class="info-value">${selectedList.value.items.length} items</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">💰 Total Amount:</span>
-        <span class="info-value">UGX ${formatNumber(selectedList.value.total_amount)}</span>
-      </div>
-    </div>
-    
-    <div class="pack-stats">
-      <div class="pack-stat">
-        <div class="pack-stat-label">✓ Packed Items</div>
-        <div class="pack-stat-value packed">${packedCount}</div>
-      </div>
-      <div class="pack-stat">
-        <div class="pack-stat-label">✗ Not Packed</div>
-        <div class="pack-stat-value unpacked">${selectedList.value.items.length - packedCount}</div>
-      </div>
-      <div class="pack-stat">
-        <div class="pack-stat-label">📊 Completion Rate</div>
-        <div class="pack-stat-value">${Math.round((packedCount / selectedList.value.items.length) * 100)}%</div>
-      </div>
     </div>
     
     <div class="report-footer">
       <p>Generated on ${reportDate}</p>
-      <p>© ${new Date().getFullYear()} Fastop - All rights reserved</p>
+      <p>&copy; ${new Date().getFullYear()} Fastop - All rights reserved</p>
     </div>
   </div>
 </body>
