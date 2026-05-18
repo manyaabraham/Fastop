@@ -1,0 +1,23 @@
+{
+  "name": "Fastop",
+  "short_name": "Fastop",
+  "description": "Smart Shopping & Budget Management App",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#5DFF72",
+  "background_color": "#FFFFFF",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["shopping", "finance", "education"],
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "72x72 96x96 128x128 144x144 152x152 192x192 384x384 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

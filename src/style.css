@@ -1,0 +1,884 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #FFFFFF;
+  color: #1A1A1A;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Premium Glass Card - White Version */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 28px;
+  border: 1px solid rgba(93, 255, 114, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(93, 255, 114, 0.1), transparent);
+  transition: left 0.6s;
+}
+
+.glass-card:hover::before {
+  left: 100%;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 20px 48px rgba(93, 255, 114, 0.15);
+  border-color: rgba(93, 255, 114, 0.5);
+}
+
+/* Gradient Text Animation */
+.gradient-text {
+  background: linear-gradient(135deg, #5DFF72 0%, #34D399 50%, #5DFF72 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Premium Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #5DFF72 0%, #34D399 100%);
+  color: #0B0B0B;
+  font-weight: 700;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(93, 255, 114, 0.3);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(93, 255, 114, 0.4);
+  background: linear-gradient(135deg, #6EFF82 0%, #45DCA9 100%);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  background: #F5F5F5;
+  color: #1A1A1A;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: 1px solid #E0E0E0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  border-color: #5DFF72;
+  background: #FFFFFF;
+  box-shadow: 0 5px 20px rgba(93, 255, 114, 0.15);
+}
+
+/* Input Fields */
+.input-field {
+  width: 100%;
+  padding: 14px 18px;
+  background: #F8F9FA;
+  border: 2px solid #E9ECEF;
+  border-radius: 18px;
+  color: #1A1A1A;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #5DFF72;
+  box-shadow: 0 0 0 4px rgba(93, 255, 114, 0.1);
+  background: #FFFFFF;
+}
+
+/* Navigation */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 24px 24px;
+  border-top: 1px solid rgba(93, 255, 114, 0.2);
+  z-index: 100;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 40px;
+}
+
+.nav-item.active {
+  color: #5DFF72;
+  background: rgba(93, 255, 114, 0.1);
+}
+
+.nav-item:hover {
+  transform: translateY(-3px);
+  color: #5DFF72;
+}
+
+.nav-item svg {
+  transition: transform 0.3s;
+}
+
+.nav-item:hover svg {
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(93, 255, 114, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(93, 255, 114, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(93, 255, 114, 0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 100px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 10px;
+  background: #F0F0F0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5DFF72, #34D399);
+  transition: width 0.5s ease;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Checklist Item */
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #DDD;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.checkbox.checked {
+  background: #5DFF72;
+  border-color: #5DFF72;
+  animation: pulse 0.3s;
+}
+
+.checkbox.checked svg {
+  color: #0B0B0B;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0F0F0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #5DFF72, #34D399);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #34D399;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .container {
+    padding: 16px;
+    padding-bottom: 100px;
+  }
+  
+  .btn-primary, .btn-secondary {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  
+  .glass-card {
+    border-radius: 20px;
+  }
+}
+
+/* Loading Spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(93, 255, 114, 0.2);
+  border-top-color: #5DFF72;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-success {
+  background: rgba(93, 255, 114, 0.2);
+  color: #34D399;
+}
+
+.badge-warning {
+  background: rgba(255, 193, 7, 0.2);
+  color: #FFC107;
+}
+
+.badge-danger {
+  background: rgba(220, 53, 69, 0.2);
+  color: #DC3545;
+}
+
+/* Stats Cards */
+.stat-card {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8F9FA 100%);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #5DFF72;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #6C757D;
+  font-weight: 500;
+}
+
+/* Add to the end of your style.css file */
+.container,
+.login-container,
+.dashboard-container,
+.shopping-container,
+.search-container,
+.checklist-container,
+.budget-container,
+.profile-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Make sure modals appear above animation */
+.modal-overlay {
+  z-index: 1001;
+}
+
+/* Glass cards should be above animation */
+.glass-card {
+  position: relative;
+  z-index: 2;
+}
+/* Dark Mode Styles */
+body.dark-mode {
+  background: #1A1A1A;
+}
+
+body.dark-mode .glass-card {
+  background: rgba(26, 26, 26, 0.95);
+  border-color: rgba(93, 255, 114, 0.3);
+}
+
+body.dark-mode .input-field {
+  background: #2A2A2A;
+  border-color: #3A3A3A;
+  color: #FFFFFF;
+}
+
+body.dark-mode .input-field:focus {
+  background: #333;
+  border-color: #5DFF72;
+}
+
+body.dark-mode .btn-secondary {
+  background: #2A2A2A;
+  color: #FFFFFF;
+  border-color: #3A3A3A;
+}
+
+body.dark-mode .bottom-nav {
+  background: rgba(26, 26, 26, 0.98);
+  border-top-color: rgba(93, 255, 114, 0.2);
+}
+
+body.dark-mode .nav-icon,
+body.dark-mode .nav-label {
+  color: #888;
+}
+
+body.dark-mode .setting-item {
+  background: #2A2A2A;
+}
+
+body.dark-mode .setting-info h3 {
+  color: #FFFFFF;
+}
+
+body.dark-mode .support-card,
+body.dark-mode .faq-section {
+  background: #2A2A2A;
+}
+
+body.dark-mode .support-card h3,
+body.dark-mode .faq-title {
+  color: #FFFFFF;
+}
+
+body.dark-mode .faq-question {
+  color: #FFFFFF;
+}
+/* Global Dark Mode Styles - Applies to ALL pages except login/signup */
+body.dark-mode {
+  background: #1A1A1A;
+}
+
+/* Dark mode for all containers */
+body.dark-mode .container,
+body.dark-mode .dashboard-container,
+body.dark-mode .shopping-container,
+body.dark-mode .search-container,
+body.dark-mode .checklist-container,
+body.dark-mode .budget-container,
+body.dark-mode .profile-container,
+body.dark-mode .support-container,
+body.dark-mode .edit-container {
+  background: #1A1A1A;
+}
+
+/* Dark mode for cards */
+body.dark-mode .glass-card {
+  background: rgba(26, 26, 26, 0.95);
+  border-color: rgba(93, 255, 114, 0.3);
+}
+
+/* Dark mode for inputs */
+body.dark-mode .input-field {
+  background: #2A2A2A;
+  border-color: #3A3A3A;
+  color: #FFFFFF;
+}
+
+body.dark-mode .input-field:focus {
+  background: #333;
+  border-color: #5DFF72;
+}
+
+body.dark-mode .input-field::placeholder {
+  color: #6C757D;
+}
+
+/* Dark mode for buttons */
+body.dark-mode .btn-secondary {
+  background: #2A2A2A;
+  color: #FFFFFF;
+  border-color: #3A3A3A;
+}
+
+body.dark-mode .btn-secondary:hover {
+  background: #333;
+  border-color: #5DFF72;
+}
+
+/* Dark mode for navigation */
+body.dark-mode .bottom-nav {
+  background: rgba(26, 26, 26, 0.98);
+  border-top-color: rgba(93, 255, 114, 0.2);
+}
+
+body.dark-mode .nav-icon,
+body.dark-mode .nav-label {
+  color: #888;
+}
+
+body.dark-mode .nav-item.active .nav-icon,
+body.dark-mode .nav-item.active .nav-label {
+  color: #5DFF72;
+}
+
+/* Dark mode for text */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode .page-title,
+body.dark-mode .section-title,
+body.dark-mode .list-name {
+  color: #FFFFFF;
+}
+
+body.dark-mode .app-subtitle,
+body.dark-mode .welcome-subtitle,
+body.dark-mode .list-date,
+body.dark-mode .item-details {
+  color: #ADB5BD;
+}
+
+/* Dark mode for stat cards */
+body.dark-mode .stat-card,
+body.dark-mode .support-card,
+body.dark-mode .faq-section {
+  background: #2A2A2A;
+}
+
+body.dark-mode .stat-label {
+  color: #ADB5BD;
+}
+
+/* Dark mode for modals */
+body.dark-mode .modal-content {
+  background: #2A2A2A;
+  color: #FFFFFF;
+}
+
+body.dark-mode .modal-content h2,
+body.dark-mode .modal-content h3 {
+  color: #FFFFFF;
+}
+
+/* Dark mode for dividers */
+body.dark-mode .divider::before,
+body.dark-mode .divider::after {
+  background: linear-gradient(90deg, transparent, #3A3A3A, transparent);
+}
+
+body.dark-mode .divider span {
+  background: transparent;
+  color: #ADB5BD;
+}
+
+/* Dark mode for FAQ */
+body.dark-mode .faq-question {
+  color: #FFFFFF;
+}
+
+body.dark-mode .faq-answer {
+  color: #ADB5BD;
+}
+
+body.dark-mode .faq-item {
+  border-bottom-color: #3A3A3A;
+}
+
+/* Dark mode for scrollbar */
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #2A2A2A;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: #5DFF72;
+}
+
+/* Dark mode for list items */
+body.dark-mode .list-card,
+body.dark-mode .item-card,
+body.dark-mode .checklist-item {
+  background: #2A2A2A;
+  border-color: #3A3A3A;
+}
+
+body.dark-mode .list-card:hover,
+body.dark-mode .item-card:hover {
+  background: #333;
+}
+
+/* Dark mode for empty states */
+body.dark-mode .empty-state {
+  background: #2A2A2A;
+  color: #ADB5BD;
+}
+
+/* Global Dark Mode - Applied everywhere except login/signup */
+body.global-dark-mode {
+  background: #1A1A1A !important;
+}
+
+/* Force dark mode on all containers when body has global-dark-mode class */
+body.global-dark-mode .container,
+body.global-dark-mode .dashboard-container,
+body.global-dark-mode .shopping-container,
+body.global-dark-mode .search-container,
+body.global-dark-mode .checklist-container,
+body.global-dark-mode .budget-container,
+body.global-dark-mode .profile-container,
+body.global-dark-mode .support-container,
+body.global-dark-mode .edit-container {
+  background: #1A1A1A !important;
+}
+
+/* Dark mode for all cards */
+body.global-dark-mode .glass-card,
+body.global-dark-mode .stat-card,
+body.global-dark-mode .support-card,
+body.global-dark-mode .faq-section,
+body.global-dark-mode .setting-item,
+body.global-dark-mode .list-card,
+body.global-dark-mode .item-card {
+  background: #2A2A2A !important;
+  border-color: #3A3A3A !important;
+}
+
+/* Dark mode for all text */
+body.global-dark-mode h1,
+body.global-dark-mode h2,
+body.global-dark-mode h3,
+body.global-dark-mode h4,
+body.global-dark-mode p,
+body.global-dark-mode span,
+body.global-dark-mode .page-title,
+body.global-dark-mode .username,
+body.global-dark-mode .welcome-title,
+body.global-dark-mode .section-title,
+body.global-dark-mode .list-name {
+  color: #FFFFFF !important;
+}
+
+/* Dark mode for subtext */
+body.global-dark-mode .app-subtitle,
+body.global-dark-mode .user-email,
+body.global-dark-mode .list-date,
+body.global-dark-mode .item-details,
+body.global-dark-mode .stat-label,
+body.global-dark-mode .welcome-subtitle {
+  color: #ADB5BD !important;
+}
+
+/* Dark mode for inputs */
+body.global-dark-mode .input-field {
+  background: #2A2A2A !important;
+  border-color: #3A3A3A !important;
+  color: #FFFFFF !important;
+}
+
+body.global-dark-mode .input-field:focus {
+  background: #333 !important;
+  border-color: #5DFF72 !important;
+}
+
+body.global-dark-mode .input-field::placeholder {
+  color: #6C757D !important;
+}
+
+/* Dark mode for buttons */
+body.global-dark-mode .btn-secondary {
+  background: #2A2A2A !important;
+  color: #FFFFFF !important;
+  border-color: #3A3A3A !important;
+}
+
+body.global-dark-mode .btn-secondary:hover {
+  background: #333 !important;
+  border-color: #5DFF72 !important;
+}
+
+/* Dark mode for FAQ */
+body.global-dark-mode .faq-question {
+  color: #FFFFFF !important;
+}
+
+body.global-dark-mode .faq-item {
+  border-bottom-color: #3A3A3A !important;
+}
+
+/* Dark mode for empty states */
+body.global-dark-mode .empty-state {
+  background: #2A2A2A !important;
+  color: #ADB5BD !important;
+}
+
+/* Dark mode for scrollbar */
+body.global-dark-mode ::-webkit-scrollbar-track {
+  background: #2A2A2A !important;
+}
+
+body.global-dark-mode ::-webkit-scrollbar-thumb {
+  background: #5DFF72 !important;
+}
+
+/* Login and Signup pages - NEVER dark */
+.login-page, .signup-page,
+.login-container, .signup-container {
+  background: transparent !important;
+}
+
+body.global-dark-mode .login-page,
+body.global-dark-mode .signup-page,
+body.global-dark-mode .login-container,
+body.global-dark-mode .signup-container {
+  background: transparent !important;
+}
+
+/* Force bottom nav to have zero space - Add to style.css */
+.bottom-nav {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Remove any browser default margins */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure bottom nav is at the very bottom */
+#app {
+  min-height: -webkit-fill-available;
+}
+
+/* Global scrolling fix for all pages */
+.page-wrapper,
+.dashboard-page,
+.profile-page,
+.support-page,
+.edit-profile-page,
+.shopping-lists-page,
+.search-page,
+.checklist-page,
+.budget-page {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure content doesn't hide behind bottom nav */
+.container,
+.profile-container,
+.support-container,
+.edit-container {
+  padding-bottom: 80px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better scrollbar for all pages */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #F0F0F0;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #5DFF72;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #34D399;
+}
