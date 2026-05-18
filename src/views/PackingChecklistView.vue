@@ -414,56 +414,252 @@ const downloadPDF = async () => {
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>${selectedList.value.list_name} - Packing Report</title>
+  <title>${escapeHtml(selectedList.value.list_name)} - Packing Report</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; min-height: 100vh; }
-    .report-container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
-    .report-header { padding: 30px; text-align: center; background: linear-gradient(135deg, #5DFF72, #34D399); }
-    .report-title { font-size: 28px; font-weight: 800; margin-bottom: 8px; color: #0B0B0B; }
-    .report-subtitle { font-size: 14px; color: #0B0B0B; opacity: 0.8; }
-    .list-info { background: #F8F9FA; padding: 20px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; border-bottom: 1px solid #E9ECEF; }
-    .info-item { text-align: center; flex: 1; }
-    .info-label { font-size: 11px; color: #6C757D; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-    .info-value { font-size: 16px; font-weight: 700; color: #1A1A1A; }
-    .table-container { padding: 30px; }
-    .items-table { width: 100%; border-collapse: collapse; }
-    .items-table th { background: #0F172A; color: white; padding: 14px; text-align: left; font-weight: 600; font-size: 13px; }
-    .items-table td { padding: 12px 14px; border-bottom: 1px solid #F0F0F0; font-size: 13px; color: #1A1A1A; }
-    .summary-section { background: #F8F9FA; padding: 20px 30px; display: flex; justify-content: space-between; border-top: 2px solid #5DFF72; }
-    .summary-label { font-size: 16px; font-weight: 600; color: #1A1A1A; }
-    .summary-amount { font-size: 24px; font-weight: 800; color: #5DFF72; }
-    .report-footer { background: #1A1A1A; padding: 20px; text-align: center; color: #ADB5BD; font-size: 11px; }
-    .status-yes { color: #34D399; font-weight: 600; }
-    .status-no { color: #ff4444; font-weight: 600; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: white;
+      padding: 40px;
+      min-height: 100vh;
+    }
+    
+    .report-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .report-header {
+      padding: 30px;
+      text-align: center;
+      background: #1A1A1A;
+      color: white;
+    }
+    
+    .report-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: white;
+    }
+    
+    .report-subtitle {
+      font-size: 16px;
+      color: #CCCCCC;
+      margin-top: 5px;
+    }
+    
+    .table-container {
+      padding: 30px;
+    }
+    
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .items-table th {
+      background: #1A1A1A;
+      color: white;
+      padding: 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .items-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #F0F0F0;
+      font-size: 13px;
+      color: #1A1A1A;
+    }
+    
+    .summary-section {
+      background: #F8F9FA;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      border-top: 2px solid #1A1A1A;
+      margin-top: 20px;
+    }
+    
+    .summary-label {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+    
+    .summary-amount {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1A1A1A;
+    }
+    
+    .info-section {
+      padding: 20px 30px;
+      background: #F8F9FA;
+      border-top: 1px solid #E0E0E0;
+      border-bottom: 1px solid #E0E0E0;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+    }
+    
+    .info-row:not(:last-child) {
+      border-bottom: 1px solid #E0E0E0;
+    }
+    
+    .info-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      min-width: 120px;
+    }
+    
+    .info-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1A1A1A;
+    }
+    
+    .pack-stats {
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      background: #F8F9FA;
+      border-top: 1px solid #E0E0E0;
+    }
+    
+    .pack-stat {
+      text-align: center;
+      flex: 1;
+    }
+    
+    .pack-stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    .pack-stat-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .pack-stat-value.packed {
+      color: #28a745;
+    }
+    
+    .pack-stat-value.unpacked {
+      color: #dc3545;
+    }
+    
+    .report-footer {
+      background: #1A1A1A;
+      padding: 20px;
+      text-align: center;
+      color: #999;
+      font-size: 11px;
+    }
+    
+    .status-yes {
+      color: #28a745;
+      font-weight: 600;
+    }
+    
+    .status-no {
+      color: #dc3545;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
   <div class="report-container">
     <div class="report-header">
-      <h1 class="report-title">FASTOP Packing Report</h1>
-      <p class="report-subtitle">${escapeHtml(selectedList.value.list_name)}</p>
+      <h1 class="report-title">FASTOP</h1>
+      <p class="report-subtitle">Packing Report - ${escapeHtml(selectedList.value.list_name)}</p>
     </div>
-    <div class="list-info">
-      <div class="info-item"><div class="info-label">Purchase Date</div><div class="info-value">${formatDate(selectedList.value.purchased_at)}</div></div>
-      <div class="info-item"><div class="info-label">Total Items</div><div class="info-value">${selectedList.value.items.length}</div></div>
-      <div class="info-item"><div class="info-label">Packed Items</div><div class="info-value">${packedCount}</div></div>
-    </div>
+    
     <div class="table-container">
       <table class="items-table">
-        <thead><tr><th>#</th><th>Item Name</th><th>Qty</th><th>Unit Price</th><th>Total</th><th>Status</th></tr></thead>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Item Name</th>
+            <th>Qty</th>
+            <th>Unit Price (UGX)</th>
+            <th>Total (UGX)</th>
+            <th>Status</th>
+          </tr>
+        </thead>
         <tbody>
-          ${itemsWithStatus.map((item, idx) => `<tr><td style="padding: 12px;">${idx + 1}</td><td style="padding: 12px;"><strong>${escapeHtml(item.name)}</strong></td><td style="padding: 12px;">${item.quantity}</td><td style="padding: 12px;">UGX ${formatNumber(item.price)}</td><td style="padding: 12px;">UGX ${formatNumber(item.price * item.quantity)}</td><td class="${item.packed ? 'status-yes' : 'status-no'}" style="padding: 12px;">${item.packed ? '✓ Packed' : '✗ Not Packed'}</td></tr>`).join('')}
+          ${itemsWithStatus.map((item, idx) => `
+          <tr>
+            <td style="padding: 12px;">${idx + 1}</td>
+            <td style="padding: 12px;"><strong>${escapeHtml(item.name)}</strong></td>
+            <td style="padding: 12px;">${item.quantity}</td>
+            <td style="padding: 12px;">${formatNumber(item.price)}</td>
+            <td style="padding: 12px;">${formatNumber(item.price * item.quantity)}</td>
+            <td class="${item.packed ? 'status-yes' : 'status-no'}" style="padding: 12px;">
+              ${item.packed ? '✓ Packed' : '✗ Not Packed'}
+            </td>
+          </tr>
+          `).join('')}
         </tbody>
-      </table>
+       </table>
     </div>
+    
     <div class="summary-section">
-      <span class="summary-label">TOTAL AMOUNT</span>
+      <span class="summary-label">GRAND TOTAL</span>
       <span class="summary-amount">UGX ${formatNumber(selectedList.value.total_amount)}</span>
     </div>
+    
+    <div class="info-section">
+      <div class="info-row">
+        <span class="info-label">📅 Purchase Date:</span>
+        <span class="info-value">${formatDate(selectedList.value.purchased_at)}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">📋 Total Items:</span>
+        <span class="info-value">${selectedList.value.items.length} items</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">💰 Total Amount:</span>
+        <span class="info-value">UGX ${formatNumber(selectedList.value.total_amount)}</span>
+      </div>
+    </div>
+    
+    <div class="pack-stats">
+      <div class="pack-stat">
+        <div class="pack-stat-label">✓ Packed Items</div>
+        <div class="pack-stat-value packed">${packedCount}</div>
+      </div>
+      <div class="pack-stat">
+        <div class="pack-stat-label">✗ Not Packed</div>
+        <div class="pack-stat-value unpacked">${selectedList.value.items.length - packedCount}</div>
+      </div>
+      <div class="pack-stat">
+        <div class="pack-stat-label">📊 Completion Rate</div>
+        <div class="pack-stat-value">${Math.round((packedCount / selectedList.value.items.length) * 100)}%</div>
+      </div>
+    </div>
+    
     <div class="report-footer">
       <p>Generated on ${reportDate}</p>
-      <p>© ${new Date().getFullYear()} Fastop - Your trusted school supply companion</p>
+      <p>© ${new Date().getFullYear()} Fastop - All rights reserved</p>
     </div>
   </div>
 </body>

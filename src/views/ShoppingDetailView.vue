@@ -706,6 +706,120 @@ onUnmounted(() => {
   transform: scale(1.1);
 }
 
+/* Notification Toast */
+.notification-toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 10000;
+  max-width: 400px;
+  min-width: 280px;
+  animation: slideInRight 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.notification-toast.success .notification-content {
+  background: #10B981;
+  color: white;
+}
+
+.notification-toast.error .notification-content {
+  background: #EF4444;
+  color: white;
+}
+
+.notification-toast.warning .notification-content {
+  background: #F59E0B;
+  color: white;
+}
+
+.notification-content svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notification-toast.success .notification-content svg {
+  color: white;
+}
+
+.notification-toast.error .notification-content svg {
+  color: white;
+}
+
+.notification-toast.warning .notification-content svg {
+  color: white;
+}
+
+/* Animation */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideInRight 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Dark Mode Support */
+.dark-mode .notification-toast .notification-content {
+  background: #2A2A2A;
+  color: white;
+}
+
+.dark-mode .notification-toast.success .notification-content {
+  background: #10B981;
+}
+
+.dark-mode .notification-toast.error .notification-content {
+  background: #EF4444;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .notification-toast {
+    bottom: 80px;
+    right: 20px;
+    left: 20px;
+    max-width: none;
+  }
+  
+  .notification-content {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  
+  .notification-content svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* For tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .notification-toast {
+    bottom: 30px;
+    right: 30px;
+    max-width: 350px;
+  }
+}
+
 /* Priority Tags */
 .priority-tag-wrapper {
   display: inline-flex;
