@@ -410,7 +410,7 @@ const downloadPDF = async () => {
     day: 'numeric'
   })
 
-  const htmlContent = `<!DOCTYPE html>
+const htmlContent = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -439,27 +439,19 @@ const downloadPDF = async () => {
     }
     
     .report-header {
-      padding: 30px;
-      text-align: center;
+      padding: 20px 30px;
       background: #1A1A1A;
       color: white;
     }
     
     .report-title {
-      font-size: 28px;
-      font-weight: 800;
-      margin-bottom: 8px;
+      font-size: 20px;
+      font-weight: 600;
       color: white;
     }
     
-    .report-subtitle {
-      font-size: 16px;
-      color: #CCCCCC;
-      margin-top: 5px;
-    }
-    
     .table-container {
-      padding: 30px;
+      padding: 20px 30px;
     }
     
     .items-table {
@@ -470,61 +462,51 @@ const downloadPDF = async () => {
     .items-table th {
       background: #1A1A1A;
       color: white;
-      padding: 14px;
+      padding: 12px;
       text-align: left;
       font-weight: 600;
       font-size: 13px;
     }
     
     .items-table td {
-      padding: 12px 14px;
+      padding: 10px 12px;
       border-bottom: 1px solid #F0F0F0;
       font-size: 13px;
       color: #1A1A1A;
     }
     
     .summary-section {
-      background: #F8F9FA;
-      padding: 20px 30px;
+      padding: 15px 30px;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       border-top: 2px solid #1A1A1A;
-      margin-top: 20px;
+      background: #F8F9FA;
     }
     
     .summary-label {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       color: #1A1A1A;
+      margin-right: 20px;
     }
     
     .summary-amount {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 800;
       color: #1A1A1A;
-    }
-    
-    .report-footer {
-      background: #1A1A1A;
-      padding: 20px;
-      text-align: center;
-      color: #999;
-      font-size: 11px;
     }
   </style>
 </head>
 <body>
   <div class="report-container">
     <div class="report-header">
-      <h1 class="report-title">FASTOP</h1>
-      <p class="report-subtitle">${escapeHtml(selectedList.value.list_name)}</p>
+      <h1 class="report-title">${escapeHtml(selectedList.value.list_name)}</h1>
     </div>
     
     <div class="table-container">
       <table class="items-table">
         <thead>
           <tr>
-            <th>No.</th>
             <th>Item Name</th>
             <th>Quantity</th>
             <th>Unit Price (UGX)</th>
@@ -534,11 +516,10 @@ const downloadPDF = async () => {
         <tbody>
           ${itemsWithStatus.map((item, idx) => `
           <tr>
-            <td style="padding: 12px;">${idx + 1}</td>
-            <td style="padding: 12px;"><strong>${escapeHtml(item.name)}</strong></td>
-            <td style="padding: 12px;">${item.quantity}</td>
-            <td style="padding: 12px;">${formatNumber(item.price)}</td>
-            <td style="padding: 12px;">${formatNumber(item.price * item.quantity)}</td>
+            <td><strong>${escapeHtml(item.name)}</strong></td>
+            <td>${item.quantity}</td>
+            <td>${formatNumber(item.price)}</td>
+            <td>${formatNumber(item.price * item.quantity)}</td>
           </tr>
           `).join('')}
         </tbody>
@@ -546,13 +527,8 @@ const downloadPDF = async () => {
     </div>
     
     <div class="summary-section">
-      <span class="summary-label">TOTAL AMOUNT</span>
+      <span class="summary-label">GRAND TOTAL:</span>
       <span class="summary-amount">UGX ${formatNumber(selectedList.value.total_amount)}</span>
-    </div>
-    
-    <div class="report-footer">
-      <p>Generated on ${reportDate}</p>
-      <p>&copy; ${new Date().getFullYear()} Fastop - All rights reserved</p>
     </div>
   </div>
 </body>
