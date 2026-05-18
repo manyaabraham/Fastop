@@ -13,13 +13,7 @@ const markSplashShown = () => {
 const routes = [
   {
     path: '/',
-    redirect: '/splash'
-  },
-  {
-    path: '/splash',
-    name: 'Splash',
-    component: () => import('../views/SplashView.vue'),
-    meta: { requiresAuth: false, hideNav: true }
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -32,6 +26,12 @@ const routes = [
     name: 'Signup',
     component: () => import('../views/SignupView.vue'),
     meta: { requiresAuth: false, hideNav: true }
+  },
+  {
+    path: '/splash',
+    name: 'Splash',
+    component: () => import('../views/SplashView.vue'),
+    meta: { requiresAuth: true, hideNav: true }
   },
   {
     path: '/dashboard',
@@ -138,48 +138,15 @@ const routes = [
     name: 'PackingDetail',
     component: () => import('../views/PackingDetailView.vue'),
     meta: { requiresAuth: true, hideNav: true }
-  },
-  // Catch-all route for 404 - must be last
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    redirect: '/dashboard'
   }
 ]
+
+
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
 
-// Navigation guard - fixed without next() callback warning
-router.beforeEach(async (to, from) => {
-  const { data: { user } } = await supabase.auth.getUser()
-  
-  // If trying to go to splash and it was already shown in this session, skip it
-  if (to.path === '/splash' && hasShownSplash()) {
-    if (user) {
-      return '/dashboard'
-    } else {
-      return '/login'
-    }
-  }
-  
-  // Mark splash as shown when we actually go to it
-  if (to.path === '/splash') {
-    markSplashShown()
-  }
-  
-  // Auth checks
-  if (user && (to.path === '/login' || to.path === '/signup')) {
-    return '/dashboard'
-  }
-  
-  if (to.meta.requiresAuth && !user) {
-    return '/login'
-  }
-  
-  return true
-})
 
 export default router

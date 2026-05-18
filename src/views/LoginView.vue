@@ -144,6 +144,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import { supabase } from '../supabase/client'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -155,17 +156,52 @@ const loading = ref(false)
 const showPassword = ref(false)
 
 const handleLogin = async () => {
-  loading.value = true
-  const result = await authStore.signIn(email.value, password.value)
-  if (result.success) {
-    showNotificationMessage('Login successful! Redirecting...', 'Welcome Back!', 'success')
-    setTimeout(() => {
-      router.push('/')
-    }, 1500)
-  } else {
-    showNotificationMessage(result.error, 'Login Failed', 'error')
+  if (!email.value || !password.value) {
+    showNotificationMessage('Please enter email and password', 'Missing Information', 'error')
+    return
   }
-  loading.value = false
+  
+  loading.value = true
+  
+  try {
+    // Sign in with Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    })
+    
+    if (error) throw error
+    
+    if (data.user) {
+      // Check if user is admin
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', data.user.id)
+        .single()
+      
+      const isAdmin = profile?.is_admin === true
+      
+      // Store admin status in session
+      sessionStorage.setItem('is_admin', isAdmin)
+      
+      showNotificationMessage('Login successful! Redirecting...', 'Welcome Back!', 'success')
+      
+      // Redirect based on role
+      setTimeout(() => {
+        if (isAdmin) {
+          router.push('/admin')
+        } else {
+          router.push('/splash')
+        }
+      }, 1500)
+    }
+  } catch (error) {
+    console.error('Login error:', error)
+    showNotificationMessage(error.message || 'Invalid email or password', 'Login Failed', 'error')
+  } finally {
+    loading.value = false
+  }
 }
 
 // Notification system
