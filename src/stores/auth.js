@@ -6,23 +6,22 @@ export const useAuthStore = defineStore('auth', () => {
   const user = ref(null)
   const loading = ref(false)
 
-  const signUp = async (email, password) => {
-    loading.value = true
-    try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      })
-      if (error) throw error
-      user.value = data.user
-      return { success: true }
-    } catch (error) {
-      return { success: false, error: error.message }
-    } finally {
-      loading.value = false
+// In your auth store
+const signUp = async (email, password, options = {}) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: options.data || {}
     }
+  })
+  
+  if (error) {
+    return { success: false, error: error.message }
   }
-
+  
+  return { success: true, data }
+}
   const signIn = async (email, password) => {
     loading.value = true
     try {
